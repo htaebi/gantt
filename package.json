@@ -1,11 +1,11 @@
 {
-  "name": "dhtmlx-gantt",
+  "name": "slashsbin-gantt",
   "version": "4.1.0",
-  "description": "An open source JavaScript Gantt chart that helps you illustrate a project schedule in a nice-looking chart.",
+  "description": "An open source JavaScript Gantt chart that helps you illustrate a project schedule in a nice-looking chart, with Persian I18N.",
   "main": "codebase/dhtmlxgantt.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DHTMLX/gantt.git"
+    "url": "git+https://github.com/slashsBin/gantt.git"
   },
   "keywords": [
     "calendar",
@@ -13,12 +13,13 @@
     "dhtmlx",
     "timeline",
     "gantt",
-    "browser"
+    "browser",
+    "persian"
   ],
   "author": "DHTMLX",
   "license": "GPL-2.0",
   "bugs": {
-    "url": "https://github.com/DHTMLX/gantt/issues"
+    "url": "https://github.com/slashsBin/gantt/issues"
   },
-  "homepage": "https://github.com/DHTMLX/gantt#readme"
+  "homepage": "https://github.com/slashsBin/gantt#readme"
 }

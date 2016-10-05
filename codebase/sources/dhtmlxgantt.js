@@ -2027,6 +2027,30 @@ gantt._scale_helpers = {
 	eachColumn : function(unit, step, callback){
 		var start = new Date(gantt._min_date),
 			end = new Date(gantt._max_date);
+
+		if(unit == "year"){
+			var begin = moment(start);
+
+			begin = moment(begin.jYear() + "/01/01", 'jYYYY/jM/jD').toDate();
+
+			var e = moment(end);
+			e = moment((e.jYear()+1) + "/01/01", 'jYYYY/jM/jD');
+			e = e.toDate();
+
+
+			var c = new Date(begin);
+
+
+
+			while(+c < +e){
+				callback.call(this, new Date(c));
+
+				c = moment(c).add(1, 'jYear').toDate();
+			}
+
+			return;
+		}
+
 		if(gantt.date[unit + "_start"]){
 			start = gantt.date[unit + "_start"](start);
 		}
@@ -2047,6 +2071,24 @@ gantt._scale_helpers = {
 	limitVisibleRange : function(cfg){
 		var dates = cfg.trace_x;
 
+
+
+		// change start date of each into the persian year
+		if(cfg.unit == "month"){
+			for(var i=0;i<dates.length;i++){
+				var d = dates[i];
+				var p = moment(d);
+				var nDate;
+
+				var m = p.jMonth() + 1;
+				if(m < 10)
+					m = '0' + m.toString();
+				nDate = p.jYear().toString() + '/' + m.toString() + '/01';
+				dates[i] = moment(nDate, 'jYYYY/jM/jD').toDate();
+			}
+		}
+
+
 		var left = 0, right = cfg.width.length-1;
 		var diff = 0;
 		if(+dates[0] < +gantt._min_date && left != right){
@@ -2054,7 +2096,7 @@ gantt._scale_helpers = {
 			diff += cfg.width[0] - width;
 			cfg.width[0] = width;
 
-			dates[0] = new Date(gantt._min_date);
+			//dates[0] = new Date(gantt._min_date);
 		}
 
 		var last = dates.length - 1;
@@ -2077,6 +2119,14 @@ gantt._scale_helpers = {
 			this.adjustSize(diff - shared, cfg.width);
 		}
 
+		for(var j=0;j<dates.length;j++){
+			if(j+1 == dates.length) continue;
+			var curr = moment(dates[j]);
+			var next = moment(dates[j+1]);
+
+			var dur = moment.duration(next.diff(curr));
+			var msg = next.format('jYYYY/jM/jD') + " - " + curr.format('jYYYY/jM/jD');
+		}
 	}
 };
 // --#include core/scales_ignore.js
@@ -10012,6 +10062,26 @@ gantt.date={
 				case "%l": return "\"+gantt.locale.date.day_full[date.getDay()]+\"";
 				case "%M": return "\"+gantt.locale.date.month_short[date.getMonth()]+\"";
 				case "%F": return "\"+gantt.locale.date.month_full[date.getMonth()]+\"";
+				//case "%d": return "\"+gantt.date.to_fixed(date.getDate())+\"";
+				case "%d": return "\" + moment(date).format('jDD') + \"";
+				//case "%m": return "\"+gantt.date.to_fixed((date.getMonth()+1))+\"";
+				case "%m": return "\"+ moment(date).format('jMM') +\"";
+				//case "%j": return "\"+date.getDate()+\"";
+				case "%j": return "\" + moment(date).format('jD') + \"";
+				//case "%n": return "\"+(date.getMonth()+1)+\"";
+				case "%n": return "\"+moment(date).format('jM')+\"";
+				//case "%y": return "\"+gantt.date.to_fixed(date.getFullYear()%100)+\"";
+				case "%y": return "\"+moment(date).format('jYY')+\"";
+				//case "%Y": return "\"+date.getFullYear()+\"";
+				case "%Y": return "\"+moment(date).format('jYYYY')+\"";
+				//case "%D": return "\"+gantt.locale.date.day_short[date.getDay()]+\"";
+				case "%D": return "\"+ moment(date).format('dd') +\"";
+				//case "%l": return "\"+gantt.locale.date.day_full[date.getDay()]+\"";
+				case "%l": return "\"+moment(date).format('ddd')+\"";
+				//case "%M": return "\"+gantt.locale.date.month_short[date.getMonth()]+\"";
+				case "%M": return "\"+moment(date).format('jMMM')+\"";
+				//case "%F": return "\"+gantt.locale.date.month_full[date.getMonth()]+\"";
+				case "%F": return "\"+moment(date).format('jMMMM')+\"";
 				case "%h": return "\"+gantt.date.to_fixed((date.getHours()+11)%12+1)+\"";
 				case "%g": return "\"+((date.getHours()+11)%12+1)+\"";
 				case "%G": return "\"+date.getHours()+\"";
@@ -10021,6 +10091,8 @@ gantt.date={
 				case "%A": return "\"+(date.getHours()>11?\"PM\":\"AM\")+\"";
 				case "%s": return "\"+gantt.date.to_fixed(date.getSeconds())+\"";
 				case "%W": return "\"+gantt.date.to_fixed(gantt.date.getISOWeek(date))+\"";
+				    //case "%W": return "\"+gantt.date.to_fixed(gantt.date.getISOWeek(date))+\"";
+			    case "%W": return "\"+moment(date).jWeek()+\"";
 				default: return a;
 			}
 		});
@@ -10190,6 +10262,12 @@ gantt.locale = {
         column_text : "Task name",
         column_start_date : "Start time",
         column_duration : "Duration",
+		//column_text: "Task name",
+		column_text: "عوان وظیفه",
+		//column_start_date: "Start time",
+		column_start_date: "تاریخ شروع",
+	    //column_duration : "Duration",
+		column_duration: "مدت زمان",
         column_add : "",
 
 		/* link confirmation */

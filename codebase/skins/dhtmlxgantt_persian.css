@@ -1,0 +1,12 @@
+.gantt_tooltip,
+.gantt_container,
+.gantt-info,
+.gantt_modal_box,
+.gantt_link_tooltip,
+.gantt_cal_light,
+.gantt_cal_light select,
+.gantt_cal_ltext textarea,
+.gantt_custom_button,
+.gantt_drag_marker {
+  font-family: Tahoma, Verdana !important;
+}

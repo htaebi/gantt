@@ -1,8 +1,8 @@
 {
-  "name": "gantt",
+  "name": "slashsbin-gantt",
   "version": "4.1.0",
   "homepage": "http://dhtmlx.com/docs/products/dhtmlxGantt/",
-  "description": "An open source JavaScript Gantt chart that helps you illustrate a project schedule in a nice-looking chart.",
+  "description": "An open source JavaScript Gantt chart that helps you illustrate a project schedule in a nice-looking chart, with Persian I18N.",
   "main": [
     "codebase/dhtmlxgantt.js",
     "codebase/dhtmlxgantt.css"
@@ -16,7 +16,12 @@
     "month",
     "day",
     "week",
-    "year"
+    "year",
+    "persian"
   ],
-  "license": "GPL"  
+  "license": "GPL",
+  "dependencies": {
+    "moment": "^2.14",
+    "moment-jalaali": "^0.5"
+  }
 }
