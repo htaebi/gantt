@@ -1,5 +1,6 @@
 dhtmlxGantt v.4.1
 =================
+[![Maintenance](https://img.shields.io/maintenance/no/2016.svg)](https://github.com/slashsBin/gantt)
 
 [![Join the chat at https://gitter.im/dhtmlx/dhtmlx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dhtmlx/dhtmlx) 
 
